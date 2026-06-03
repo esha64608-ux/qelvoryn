@@ -73,7 +73,7 @@ export async function getProducts(first = 8) {
 export async function getProductByHandle(handle: string) {
   const query = `
     query getProduct($handle: String!) {
-      productByHandle(handle: $handle) {
+      product(handle: $handle) {
         id
         title
         handle
@@ -96,8 +96,8 @@ export async function getProductByHandle(handle: string) {
   `;
 
   const res = await shopifyFetch({ query, variables: { handle } });
-  if (res.body?.data?.productByHandle) {
-    return res.body.data.productByHandle;
+  if (res.body?.data?.product) {
+    return res.body.data.product;
   }
   return null;
 }
