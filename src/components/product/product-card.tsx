@@ -37,6 +37,10 @@ export default function ProductCard({ product }: { product: any }) {
   return (
     <div className="group flex flex-col">
       <div className="relative aspect-[4/5] bg-neutral-100 overflow-hidden mb-4 block">
+        <Link href={`/products/${product.handle}`} className="absolute inset-0 z-10">
+          <span className="sr-only">View {product.title}</span>
+        </Link>
+        
         {/* Primary Image */}
         <Image
           src={imageUrl}
@@ -57,13 +61,14 @@ export default function ProductCard({ product }: { product: any }) {
         )}
         
         {/* Quick View Overlay Button */}
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-20">
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               handleAddToCart();
             }}
-            className="w-full bg-black text-white py-3 text-xs uppercase tracking-widest font-bold hover:bg-neutral-800 transition-colors"
+            className="w-full bg-black text-white py-3 text-xs uppercase tracking-widest font-bold hover:bg-neutral-800 transition-colors cursor-pointer"
           >
             Quick Add
           </button>
