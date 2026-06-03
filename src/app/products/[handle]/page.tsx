@@ -8,16 +8,20 @@ export async function generateStaticParams() {
   return handles;
 }
 
-export async function generateMetadata({ params }: { params: { handle: string } }) {
-  const product = await getProductByHandle(params.handle);
+export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }) {
+  const { handle } = await params;
+  const product = await getProductByHandle(handle);
+  if (!product) return { title: "Product Not Found" };
   return {
     title: `${product.title} | Qelvoryn Digital`,
     description: product.description,
   };
 }
 
-export default async function ProductPage({ params }: { params: { handle: string } }) {
-  const product = await getProductByHandle(params.handle);
+export default async function ProductPage({ params }: { params: Promise<{ handle: string }> }) {
+  const { handle } = await params;
+  const product = await getProductByHandle(handle);
+  if (!product) return <div className="pt-32 text-center">Product not found.</div>;
 
   const price = product.priceRange.minVariantPrice;
   const formattedPrice = new Intl.NumberFormat("en-GB", {
