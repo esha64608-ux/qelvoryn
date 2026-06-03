@@ -19,7 +19,18 @@ export default function CartDrawer() {
       }));
       const checkoutUrl = await createCheckout(checkoutItems);
       if (checkoutUrl) {
-        window.location.href = checkoutUrl;
+        try {
+          // Force the checkout URL to use the .myshopify.com domain
+          // This prevents a 404 error if Shopify tries to route checkout to the headless custom domain
+          const urlObj = new URL(checkoutUrl);
+          const shopifyDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
+          if (shopifyDomain && urlObj.hostname !== shopifyDomain) {
+            urlObj.hostname = shopifyDomain;
+          }
+          window.location.href = urlObj.toString();
+        } catch (e) {
+          window.location.href = checkoutUrl;
+        }
       } else {
         alert("Failed to create checkout session. Please try again.");
       }
