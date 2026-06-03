@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { CartProvider } from "@/components/cart/cart-provider";
+import CartDrawer from "@/components/cart/cart-drawer";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,9 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} antialiased h-full`}>
       <body className="min-h-full flex flex-col bg-white text-black font-sans selection:bg-black selection:text-white">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <CartProvider>
+          <Navbar />
+          <CartDrawer />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
