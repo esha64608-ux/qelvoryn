@@ -1,25 +1,23 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #050505;
-  --color-foreground: #f5f5f5;
+  --color-background: #ffffff;
+  --color-foreground: #000000;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-outfit: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .glass {
-    @apply bg-[#050505]/60 backdrop-blur-xl border-b border-white/5;
-  }
-  .glass-card {
-    @apply bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-2xl;
-  }
-  .premium-glow:hover {
-    box-shadow: 0 0 40px -10px rgba(255, 255, 255, 0.15);
-  }
+/* Hide scrollbar for horizontal scrolling areas */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

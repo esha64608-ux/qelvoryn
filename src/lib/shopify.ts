@@ -45,12 +45,12 @@ export async function getProducts(first = 8) {
             priceRange {
               minVariantPrice { amount currencyCode }
             }
-            images(first: 1) {
+            images(first: 2) {
               edges {
                 node { url altText width height }
               }
             }
-            variants(first: 1) {
+            variants(first: 3) {
               edges {
                 node { id title price { amount currencyCode } }
               }

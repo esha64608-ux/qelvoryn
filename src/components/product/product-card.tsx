@@ -15,6 +15,9 @@ export default function ProductCard({ product }: { product: any }) {
   const imageUrl =
     product.images?.edges[0]?.node?.url ||
     "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800";
+    
+  const hoverImageUrl = 
+    product.images?.edges[1]?.node?.url || imageUrl;
 
   const firstVariant = product.variants?.edges[0]?.node;
 
@@ -32,30 +35,54 @@ export default function ProductCard({ product }: { product: any }) {
   };
 
   return (
-    <div className="group relative flex flex-col p-4 glass-card transition-all duration-500 hover:scale-[1.02] hover:border-white/20">
-      <Link href={`/products/${product.handle}`} className="relative aspect-[4/5] rounded-xl overflow-hidden mb-6 block bg-neutral-900">
+    <div className="group flex flex-col">
+      <div className="relative aspect-[4/5] bg-neutral-100 overflow-hidden mb-4 block">
+        {/* Primary Image */}
         <Image
           src={imageUrl}
           alt={product.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          className="object-cover object-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-80"
+          className={`object-cover object-center transition-opacity duration-500 ${hoverImageUrl !== imageUrl ? 'group-hover:opacity-0' : ''}`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </Link>
-      <div className="flex flex-col flex-grow text-center items-center px-2">
-        <h3 className="text-base font-medium text-neutral-100 mb-2 line-clamp-2 leading-snug font-outfit">
-          <Link href={`/products/${product.handle}`} className="hover:text-white transition-colors">
+        {/* Hover Image */}
+        {hoverImageUrl !== imageUrl && (
+          <Image
+            src={hoverImageUrl}
+            alt={`${product.title} lifestyle`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            className="object-cover object-center absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          />
+        )}
+        
+        {/* Quick View Overlay Button */}
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddToCart();
+            }}
+            className="w-full bg-black text-white py-3 text-xs uppercase tracking-widest font-bold hover:bg-neutral-800 transition-colors"
+          >
+            Quick Add
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col text-left px-1">
+        <h3 className="text-sm font-bold text-black mb-1 line-clamp-1 font-heading uppercase tracking-wide">
+          <Link href={`/products/${product.handle}`} className="hover:opacity-70 transition-opacity">
             {product.title}
           </Link>
         </h3>
-        <p className="text-sm text-neutral-400 mb-6">{formattedPrice}</p>
-        <button
-          onClick={handleAddToCart}
-          className="w-full mt-auto bg-white/5 border border-white/10 text-neutral-200 py-3 px-6 text-xs uppercase tracking-widest font-semibold hover:bg-white hover:text-[#050505] transition-all duration-500 rounded-lg premium-glow"
-        >
-          Add to Cart
-        </button>
+        <p className="text-sm text-neutral-600 mb-3">{formattedPrice}</p>
+        
+        {/* Subtle Swatches (Mock/Visual only) */}
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-[#D4AF37] border border-neutral-300" title="Gold"></div>
+          <div className="w-3 h-3 rounded-full bg-[#E5E4E2] border border-neutral-300" title="Silver"></div>
+        </div>
       </div>
     </div>
   );
