@@ -8,7 +8,7 @@ export async function shopifyFetch({
   query: string;
   variables?: Record<string, any>;
 }) {
-  const endpoint = `https://${domain}/api/2024-01/graphql.json`;
+  const endpoint = `https://${domain}/api/2024-01/graphql.json?bust=1`;
 
   try {
     const result = await fetch(endpoint, {
