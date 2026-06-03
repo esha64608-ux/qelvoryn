@@ -1,0 +1,19 @@
+.btn {
+  width: 100%;
+  background-color: var(--color-accent);
+  color: #fff;
+  padding: 1.25rem 2rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.btn:hover {
+  background-color: var(--color-accent-hover);
+}

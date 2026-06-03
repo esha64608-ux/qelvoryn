@@ -1,0 +1,20 @@
+.bar {
+  background-color: var(--color-accent);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.link {
+  transition: opacity 0.3s ease;
+}
+
+.link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

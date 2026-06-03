@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/components/cart/cart-provider";
+import styles from "./product-card.module.css";
 
 export default function ProductCard({ product }: { product: any }) {
   const { addItem, openCart } = useCart();
@@ -23,17 +24,22 @@ export default function ProductCard({ product }: { product: any }) {
     if (firstVariantId) {
       addItem({
         variantId: firstVariantId,
-        quantity: 1,
+        productId: product.id,
+        title: product.title,
+        variantTitle: product.variants?.edges[0]?.node?.title || product.title,
+        price: price.amount,
+        currencyCode: price.currencyCode,
+        imageUrl: imageUrl,
       });
       openCart();
     }
   };
 
   return (
-    <div className="group flex flex-col relative bg-transparent overflow-hidden">
-      <div className="relative aspect-[4/5] bg-neutral-100 overflow-hidden mb-5 block rounded-sm">
-        <Link href={`/products/${product.handle}`} className="absolute inset-0 z-10">
-          <span className="sr-only">View {product.title}</span>
+    <div className={styles.card}>
+      <div className={styles.imageWrapper}>
+        <Link href={`/products/${product.handle}`} className={styles.imageLink}>
+          <span className="visually-hidden">View {product.title}</span>
         </Link>
         
         {/* Primary Image */}
@@ -42,7 +48,7 @@ export default function ProductCard({ product }: { product: any }) {
           alt={product.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+          className={styles.primaryImage}
         />
         
         {/* Hover Image */}
@@ -52,32 +58,32 @@ export default function ProductCard({ product }: { product: any }) {
             alt={`${product.title} lifestyle`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-cover object-center absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out group-hover:scale-105"
+            className={styles.hoverImage}
           />
         )}
 
         {/* Quick Add Overlay Button */}
-        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out z-20">
+        <div className={styles.quickAddWrapper}>
           <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               handleAddToCart();
             }}
-            className="w-full bg-white/90 backdrop-blur-sm text-black border border-transparent py-3 px-4 text-xs tracking-widest font-semibold uppercase shadow-lg hover:bg-[var(--color-accent)] hover:text-white hover:border-[var(--color-accent)] cursor-pointer rounded-sm transition-colors duration-200"
+            className={styles.quickAddBtn}
           >
             Add to Cart
           </button>
         </div>
       </div>
 
-      <div className="flex flex-col text-left px-1 pb-2">
-        <h3 className="text-sm font-medium text-black mb-1 line-clamp-1 tracking-wide">
-          <Link href={`/products/${product.handle}`} className="hover:text-neutral-500 transition-colors">
+      <div className={styles.details}>
+        <h3 className={styles.title}>
+          <Link href={`/products/${product.handle}`} className={styles.titleLink}>
             {product.title}
           </Link>
         </h3>
-        <p className="text-sm text-neutral-500">{formattedPrice}</p>
+        <p className={styles.price}>{formattedPrice}</p>
       </div>
     </div>
   );

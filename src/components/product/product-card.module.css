@@ -1,0 +1,111 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 4/5;
+  background-color: var(--color-muted);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  display: block;
+  border-radius: 2px;
+}
+
+.imageLink {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+.primaryImage, .hoverImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.7s ease-out, opacity 0.7s ease-out;
+}
+
+.hoverImage {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.card:hover .primaryImage,
+.card:hover .hoverImage {
+  transform: scale(1.05);
+}
+
+.card:hover .hoverImage {
+  opacity: 1;
+}
+
+.quickAddWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  z-index: 20;
+}
+
+.card:hover .quickAddWrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.quickAddBtn {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  color: var(--color-foreground);
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 2px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.quickAddBtn:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0 0.25rem 0.5rem;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-foreground);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titleLink {
+  transition: color 0.3s ease;
+}
+
+.titleLink:hover {
+  color: var(--color-accent);
+}
+
+.price {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}

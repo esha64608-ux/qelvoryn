@@ -1,0 +1,26 @@
+.page {
+  padding-top: 8rem;
+  padding-bottom: 6rem;
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--color-foreground);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.divider {
+  width: 4rem;
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 0 auto;
+}
