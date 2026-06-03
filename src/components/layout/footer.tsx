@@ -1,51 +1,51 @@
 export default function Footer() {
   return (
-    <footer className="bg-black text-white pt-24 pb-12 mt-auto border-t border-black">
-      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+    <footer className="bg-[var(--color-offwhite)] text-[var(--color-foreground)] pt-20 pb-10 mt-auto border-t border-gray-200">
+      <div className="container mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
         
         {/* Customer Help */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest font-bold mb-6 font-heading">Customer Help</h4>
-          <ul className="space-y-4 text-sm text-neutral-400">
-            <li><a href="/faq" className="hover:text-white transition-colors">FAQs</a></li>
-            <li><a href="/shipping" className="hover:text-white transition-colors">Shipping & Returns</a></li>
-            <li><a href="/contact" className="hover:text-white transition-colors">Contact Us</a></li>
-            <li><a href="/warranty" className="hover:text-white transition-colors">Lifetime Warranty</a></li>
+          <h4 className="text-sm font-semibold mb-6">Support</h4>
+          <ul className="space-y-3 text-sm text-gray-500">
+            <li><a href="/faq" className="hover:text-[var(--color-accent)] transition-colors">FAQs</a></li>
+            <li><a href="/shipping" className="hover:text-[var(--color-accent)] transition-colors">Shipping & Returns</a></li>
+            <li><a href="/contact" className="hover:text-[var(--color-accent)] transition-colors">Contact Us</a></li>
+            <li><a href="/warranty" className="hover:text-[var(--color-accent)] transition-colors">Lifetime Warranty</a></li>
           </ul>
         </div>
 
-        {/* About */}
+        {/* Shop */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest font-bold mb-6 font-heading">About Qelvoryn</h4>
-          <ul className="space-y-4 text-sm text-neutral-400">
-            <li><a href="/about" className="hover:text-white transition-colors">Our Story</a></li>
-            <li><a href="/shop" className="hover:text-white transition-colors">Shop All</a></li>
-            <li><a href="/materials" className="hover:text-white transition-colors">Materials</a></li>
+          <h4 className="text-sm font-semibold mb-6">Shop</h4>
+          <ul className="space-y-3 text-sm text-gray-500">
+            <li><a href="/shop" className="hover:text-[var(--color-accent)] transition-colors">Designer Toys</a></li>
+            <li><a href="/shop" className="hover:text-[var(--color-accent)] transition-colors">Premium Wallets</a></li>
+            <li><a href="/shop" className="hover:text-[var(--color-accent)] transition-colors">Modern Apparel</a></li>
           </ul>
         </div>
 
         {/* Mission */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest font-bold mb-6 font-heading">Our Mission</h4>
-          <p className="text-neutral-400 text-sm leading-relaxed pr-4">
-            Jewelry designed for the relentless. We build pieces that endure every environment, so you can live without limits. Sweat, swim, and thrive.
+          <h4 className="text-sm font-semibold mb-6">About Qelvoryn</h4>
+          <p className="text-gray-500 text-sm leading-relaxed pr-4">
+            Curated lifestyle essentials for the modern minimalist. Premium materials, flawless design, built to last.
           </p>
         </div>
 
         {/* Newsletter */}
         <div>
-          <h4 className="text-xs uppercase tracking-widest font-bold mb-6 font-heading">Join The Club</h4>
-          <p className="text-sm text-neutral-400 mb-4">Subscribe for exclusive drops and VIP access.</p>
+          <h4 className="text-sm font-semibold mb-6">Join The List</h4>
+          <p className="text-sm text-gray-500 mb-4">Subscribe for early access to new drops.</p>
           <form className="flex w-full">
             <input 
               type="email" 
-              placeholder="EMAIL ADDRESS" 
-              className="w-full px-4 py-3 bg-white text-black outline-none text-xs font-bold placeholder-neutral-500 rounded-none"
+              placeholder="Email address" 
+              className="w-full px-4 py-3 bg-white text-black border border-gray-200 outline-none text-sm placeholder-gray-400 focus:border-[var(--color-accent)] transition-colors rounded-l-md"
               required
             />
             <button 
               type="submit" 
-              className="bg-neutral-800 text-white px-6 py-3 text-xs uppercase tracking-wider font-bold hover:bg-neutral-700 transition-colors rounded-none border-l border-neutral-700"
+              className="bg-[var(--color-accent)] text-white px-6 py-3 text-sm font-semibold hover:bg-[var(--color-accent-hover)] transition-colors rounded-r-md"
             >
               Join
             </button>
@@ -53,11 +53,20 @@ export default function Footer() {
         </div>
 
       </div>
-      <div className="container mx-auto px-6 md:px-12 mt-24 pt-8 border-t border-neutral-800 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 font-medium">
-        <p>&copy; {new Date().getFullYear()} QELVORYN. JEWELRY WITHOUT LIMITS.</p>
-        <div className="flex gap-6 mt-4 md:mt-0 uppercase tracking-widest">
-          <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
-          <a href="/terms" className="hover:text-white transition-colors">Terms</a>
+      <div className="container mx-auto px-6 md:px-12 mt-20 pt-8 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between text-sm text-gray-400">
+        <p>&copy; {new Date().getFullYear()} QELVORYN DIGITAL. ALL RIGHTS RESERVED.</p>
+        
+        {/* Payment Icons (Visual Mockup) */}
+        <div className="flex items-center gap-3 mt-6 md:mt-0 opacity-70">
+          <div className="w-10 h-6 bg-gray-300 rounded-sm"></div>
+          <div className="w-10 h-6 bg-gray-300 rounded-sm"></div>
+          <div className="w-10 h-6 bg-gray-300 rounded-sm"></div>
+          <div className="w-10 h-6 bg-gray-300 rounded-sm"></div>
+        </div>
+
+        <div className="flex gap-6 mt-6 md:mt-0">
+          <a href="/privacy" className="hover:text-[var(--color-accent)] transition-colors">Privacy</a>
+          <a href="/terms" className="hover:text-[var(--color-accent)] transition-colors">Terms</a>
         </div>
       </div>
     </footer>

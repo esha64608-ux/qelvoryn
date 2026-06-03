@@ -2,9 +2,11 @@
 
 @theme inline {
   --color-background: #ffffff;
-  --color-foreground: #000000;
+  --color-foreground: #111827;
+  --color-accent: #7b8f78;
+  --color-accent-hover: #677a64;
+  --color-offwhite: #f9fafb;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -20,4 +22,13 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Base Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
