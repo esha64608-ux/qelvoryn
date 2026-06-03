@@ -3,9 +3,33 @@
 import { useCart } from "./cart-provider";
 import Image from "next/image";
 import Link from "next/link";
+import { createCheckout } from "@/lib/shopify";
+import { useState } from "react";
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal, totalCount } = useCart();
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    setIsCheckoutLoading(true);
+    try {
+      const checkoutItems = items.map((item) => ({
+        variantId: item.variantId,
+        quantity: item.quantity,
+      }));
+      const checkoutUrl = await createCheckout(checkoutItems);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      } else {
+        alert("Failed to create checkout session. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Failed to create checkout session.");
+    } finally {
+      setIsCheckoutLoading(false);
+    }
+  };
 
   return (
     <>
@@ -17,17 +41,17 @@ export default function CartDrawer() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-[#050505]/80 backdrop-blur-3xl z-50 flex flex-col shadow-[0_0_80px_rgba(0,0,0,0.8)] border-l border-white/5 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-8 py-6 border-b border-neutral-100">
-          <h2 className="text-sm uppercase tracking-widest font-semibold">
-            Cart {totalCount > 0 && <span className="text-neutral-400">({totalCount})</span>}
+        <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
+          <h2 className="text-sm uppercase tracking-widest font-semibold font-outfit text-white">
+            Cart {totalCount > 0 && <span className="text-neutral-500">({totalCount})</span>}
           </h2>
           <button
             onClick={closeCart}
             aria-label="Close cart"
-            className="text-neutral-400 hover:text-black transition-colors"
+            className="text-neutral-400 hover:text-white transition-colors"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M18 6 6 18M6 6l12 12"/>
@@ -51,22 +75,22 @@ export default function CartDrawer() {
             <ul className="space-y-6">
               {items.map((item) => (
                 <li key={item.variantId} className="flex gap-4">
-                  <div className="relative w-20 h-24 bg-neutral-100 flex-shrink-0 overflow-hidden">
-                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover" sizes="80px" />
+                  <div className="relative w-24 h-24 rounded-lg bg-neutral-900 flex-shrink-0 overflow-hidden border border-white/5">
+                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover" sizes="96px" />
                   </div>
-                  <div className="flex-grow min-w-0">
-                    <p className="font-medium text-sm truncate">{item.title}</p>
+                  <div className="flex-grow min-w-0 flex flex-col justify-center">
+                    <p className="font-medium text-sm truncate text-neutral-200">{item.title}</p>
                     {item.variantTitle !== "Default Title" && (
-                      <p className="text-neutral-400 text-xs mt-0.5">{item.variantTitle}</p>
+                      <p className="text-neutral-500 text-xs mt-1">{item.variantTitle}</p>
                     )}
-                    <p className="text-sm mt-1">
+                    <p className="text-sm mt-2 text-white">
                       {new Intl.NumberFormat("en-GB", { style: "currency", currency: item.currencyCode }).format(parseFloat(item.price))}
                     </p>
-                    <div className="flex items-center gap-3 mt-3">
-                      <button onClick={() => updateQuantity(item.variantId, item.quantity - 1)} className="w-6 h-6 border border-neutral-200 flex items-center justify-center text-sm hover:border-black transition-colors">−</button>
-                      <span className="text-sm w-4 text-center">{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.variantId, item.quantity + 1)} className="w-6 h-6 border border-neutral-200 flex items-center justify-center text-sm hover:border-black transition-colors">+</button>
-                      <button onClick={() => removeItem(item.variantId)} className="ml-auto text-neutral-300 hover:text-black transition-colors">
+                    <div className="flex items-center gap-4 mt-4">
+                      <button onClick={() => updateQuantity(item.variantId, item.quantity - 1)} className="w-7 h-7 rounded border border-white/10 flex items-center justify-center text-sm text-neutral-300 hover:border-white/40 hover:text-white transition-colors">−</button>
+                      <span className="text-sm w-4 text-center text-neutral-200">{item.quantity}</span>
+                      <button onClick={() => updateQuantity(item.variantId, item.quantity + 1)} className="w-7 h-7 rounded border border-white/10 flex items-center justify-center text-sm text-neutral-300 hover:border-white/40 hover:text-white transition-colors">+</button>
+                      <button onClick={() => removeItem(item.variantId)} className="ml-auto text-neutral-500 hover:text-white transition-colors">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                           <path d="M18 6 6 18M6 6l12 12"/>
                         </svg>
@@ -81,21 +105,21 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-8 py-6 border-t border-neutral-100">
+          <div className="px-8 py-8 border-t border-white/10 bg-[#050505]/50">
             <div className="flex justify-between items-center mb-6">
-              <span className="text-sm text-neutral-500 uppercase tracking-widest">Subtotal</span>
-              <span className="font-medium">{subtotal}</span>
+              <span className="text-sm text-neutral-400 uppercase tracking-widest">Subtotal</span>
+              <span className="font-medium text-lg text-white">{subtotal}</span>
             </div>
-            <Link
-              href="/checkout"
-              onClick={closeCart}
-              className="block w-full bg-black text-white text-center py-4 text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-colors"
+            <button
+              onClick={handleCheckout}
+              disabled={isCheckoutLoading}
+              className="block w-full bg-white text-[#050505] text-center py-4 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-neutral-200 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed premium-glow"
             >
-              Proceed to Checkout
-            </Link>
+              {isCheckoutLoading ? "Preparing Checkout..." : "Proceed to Checkout"}
+            </button>
             <button
               onClick={closeCart}
-              className="block w-full text-center mt-3 text-xs text-neutral-400 hover:text-black uppercase tracking-widest transition-colors"
+              className="block w-full text-center mt-4 text-xs text-neutral-500 hover:text-white uppercase tracking-widest transition-colors"
             >
               Continue Shopping
             </button>

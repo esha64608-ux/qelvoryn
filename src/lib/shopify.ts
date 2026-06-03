@@ -119,3 +119,40 @@ export async function getAllProductHandles() {
   }
   return [];
 }
+
+// ─── Create a Shopify Checkout ───────────────────────────────────────────────
+export async function createCheckout(items: { variantId: string; quantity: number }[]) {
+  const query = `
+    mutation cartCreate($input: CartInput!) {
+      cartCreate(input: $input) {
+        cart {
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    input: {
+      lines: items.map(item => ({
+        merchandiseId: item.variantId,
+        quantity: item.quantity
+      }))
+    }
+  };
+
+  const res = await shopifyFetch({ query, variables });
+  if (res.body?.data?.cartCreate?.cart?.checkoutUrl) {
+    return res.body.data.cartCreate.cart.checkoutUrl;
+  }
+  
+  if (res.body?.data?.cartCreate?.userErrors?.length) {
+    console.error("Shopify Cart Create Errors:", res.body.data.cartCreate.userErrors);
+  }
+  
+  return null;
+}

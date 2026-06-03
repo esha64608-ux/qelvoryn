@@ -11,9 +11,9 @@ export default async function ShopPage() {
 
   return (
     <div className="pt-32 pb-24 px-6 md:px-12 max-w-[1600px] mx-auto">
-      <div className="mb-16 text-center">
-        <h1 className="text-4xl font-light tracking-tight mb-4">All Products</h1>
-        <div className="w-12 h-[1px] bg-black mx-auto"></div>
+      <div className="mb-20 text-center">
+        <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-6 font-outfit text-white">All Products</h1>
+        <div className="w-16 h-[1px] bg-white/20 mx-auto"></div>
       </div>
       <ProductGrid products={products} />
     </div>

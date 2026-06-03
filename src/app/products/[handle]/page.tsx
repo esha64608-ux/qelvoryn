@@ -33,21 +33,21 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
   const mainImage = images[0]?.node?.url ?? "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800";
 
   return (
-    <div className="pt-24 min-h-screen">
+    <div className="pt-24 min-h-screen bg-[#050505] text-neutral-200">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-16">
         {/* Breadcrumb */}
-        <nav className="mb-10 text-xs text-neutral-400 uppercase tracking-widest flex items-center gap-2">
-          <Link href="/" className="hover:text-black transition-colors">Home</Link>
+        <nav className="mb-10 text-xs text-neutral-500 uppercase tracking-widest flex items-center gap-2">
+          <Link href="/" className="hover:text-white transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/shop" className="hover:text-black transition-colors">Shop</Link>
+          <Link href="/shop" className="hover:text-white transition-colors">Shop</Link>
           <span>/</span>
-          <span className="text-black">{product.title}</span>
+          <span className="text-neutral-300">{product.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Image Gallery */}
           <div className="space-y-4">
-            <div className="relative aspect-square bg-neutral-100 overflow-hidden">
+            <div className="relative aspect-square bg-neutral-900 rounded-2xl overflow-hidden border border-white/5">
               <Image
                 src={mainImage}
                 alt={product.title}
@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
             {images.length > 1 && (
               <div className="grid grid-cols-4 gap-3">
                 {images.slice(1, 5).map((img: any, i: number) => (
-                  <div key={i} className="relative aspect-square bg-neutral-100 overflow-hidden">
+                  <div key={i} className="relative aspect-square bg-neutral-900 rounded-xl overflow-hidden border border-white/5 hover:border-white/20 transition-colors cursor-pointer">
                     <Image src={img.node.url} alt={img.node.altText ?? product.title} fill sizes="120px" className="object-cover" />
                   </div>
                 ))}
@@ -69,13 +69,13 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
           </div>
 
           {/* Product Info */}
-          <div className="lg:sticky lg:top-28">
-            <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-4">{product.title}</h1>
-            <p className="text-2xl font-medium mb-8">{formattedPrice}</p>
+          <div className="lg:sticky lg:top-28 glass-card p-8 md:p-12">
+            <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4 font-outfit text-white">{product.title}</h1>
+            <p className="text-2xl font-medium mb-8 text-neutral-300">{formattedPrice}</p>
 
-            <div className="w-full h-[1px] bg-neutral-100 mb-8" />
+            <div className="w-full h-[1px] bg-white/10 mb-8" />
 
-            <p className="text-neutral-600 leading-relaxed mb-10">{product.description}</p>
+            <p className="text-neutral-400 leading-relaxed mb-10 text-lg">{product.description}</p>
 
             {/* Variants */}
             {product.variants?.edges?.length > 1 && (
@@ -85,7 +85,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
                   {product.variants.edges.map((v: any) => (
                     <button
                       key={v.node.id}
-                      className="border border-neutral-200 px-4 py-2 text-sm hover:border-black transition-colors"
+                      className="border border-white/20 px-6 py-2.5 text-sm hover:border-white hover:bg-white/5 transition-colors rounded-full"
                     >
                       {v.node.title}
                     </button>
